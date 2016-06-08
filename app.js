@@ -3,9 +3,8 @@ map = L.map('map', {
 }).setView([53.68583, 23.83812], 13);
 
 var layerGroupGeolocation = new L.layerGroup();
-var geoJsonLayer = [];
 var busStopArray = [];
-
+var clusters = [];
 
 L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
@@ -50,20 +49,28 @@ function clearGeolocationPosition() {
 
 function getAllBusStop() {
 
-    geoJsonLayer = L.geoJson().addTo(map);
-
-    console.log(busStopArray.length);
     $.getJSON("bus-stop.json", function (json) {
         busStopArray = json;
 
     });
 
-    geoJsonLayer.addData(busStopArray);
-    console.log(busStopArray.length);
+    var myCluster = L.geoJson(busStopArray,{
+        pointToLayer: function(feature,latlng){
+            var popup = feature.properties['name:ru'];
+            var marker = L.marker(latlng);
+            marker.bindPopup('Название остановки: '+popup);
+            return marker;
+        }
+    });
+
+    clusters = L.markerClusterGroup();
+    clusters.addLayer(myCluster);
+    map.addLayer(clusters);
+
 }
 
 
 function clearAllBusStop() {
-    map.removeLayer(geoJsonLayer);
+   clusters.clearLayers();
 }
 
