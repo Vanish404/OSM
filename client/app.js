@@ -58,7 +58,7 @@ function getAllBusStop() {
         pointToLayer: function(feature,latlng){
             var popup = feature.properties['name:ru'];
             var marker = L.marker(latlng);
-            marker.bindPopup('Название остановки: '+popup);
+            marker.bindPopup('Bus-stop name: '+popup);
             return marker;
         }
     });
