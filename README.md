@@ -2,9 +2,7 @@
 
 ## Description
 
-This project contains some functions to work with [OSM] (http://www.openstreetmap.org/#map=13/53.6695/23.8275) 
+Small http server with OSM [https://github.com/KrivichaninDenis/OSM]
 
-## Install
-* install [npm](https://www.npmjs.com)
-* `npm install http-server --save`
-* `http-server + foldr`
+## How to run ?
+* npm start
